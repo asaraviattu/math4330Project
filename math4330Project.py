@@ -113,22 +113,25 @@ def GS(A):
 		accessible. 
 
 	'''
-	col = len(A)
-	row = len(A[0])
-	V = A
-	R = [[0]*col for i in range(col)]
-	Q = []
+	if type(A[i]) != int and type(A[i]) != float and type(A[i]) != complex:
+		print("invalid input")
+	else:
+		col = len(A)
+		row = len(A[0])
+		V = A
+		R = [[0]*col for i in range(col)]
+		Q = []
 
-	for i in range(col):
-		R[i][i] = twoNorm(V[i])
-		number = 1/(R[i][i])
-		Qi = scalarVecMulti(number,V[i])
-		Q.append(normalize(V[i]))
-		for j in range(i+1,col):
-			R[j][i] = dot(Q[i],V[j])
-			temp = scalarVecMulti(R[j][i],Q[i])
-			V[j] = vecSubtract(V[j],temp)
-	return [Q,R]
+		for i in range(col):
+			R[i][i] = twoNorm(V[i])
+			number = 1/(R[i][i])
+			Qi = scalarVecMulti(number,V[i])
+			Q.append(normalize(V[i]))
+			for j in range(i+1,col):
+				R[j][i] = dot(Q[i],V[j])
+				temp = scalarVecMulti(R[j][i],Q[i])
+				V[j] = vecSubtract(V[j],temp)
+		return [Q,R]
 
 
 def transMatVec(mat,vec):
@@ -138,6 +141,7 @@ def transMatVec(mat,vec):
 	iteration of i, the empty list sup is appended until we have a new vector with the correct values.
 
 	'''
+	
 	sup = []
 
 	for i in range(len(mat)):
